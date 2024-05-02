@@ -15,12 +15,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Epilogue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Epilogue', sans-serif;
+        }
 
+        body::-webkit-scrollbar {
+            width: 5px;
+            margin: 0% 2rem !important;
+        }
+
+        body::-webkit-scrollbar-track {
+            display: none;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 100px rgb(84, 83, 83);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
     <title>my cdd| @yield('title')</title>
 </head>
 
 <body>
-     {{--@auth
+    {{-- @auth
         @if (Auth::user()->usertype == 'admin')
             @include('layouts.partials.admin.header')
             @yield('content')
@@ -34,7 +59,7 @@
         @include('layouts.partials.header')
         @yield('content')
         @include('layouts.partials.footer')
-    @endif--}}
+    @endif --}}
     @include('layouts.partials.nav')
     @yield('content')
     @include('layouts.partials.footer')
