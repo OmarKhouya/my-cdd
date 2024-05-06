@@ -10,13 +10,14 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post"
+        action="{{ Auth::guard('partner')->check() ? route('partner.profile.update') : route('profile.update') }}"
+        class="mt-6 space-y-6">
         @csrf
         @method('patch')
         <div class="my-3">
             <label for="name" class="input-label">Name</label>
-            <input type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}" required
-                autofocus autocomplete="name">
+            <input type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}" required>
             @if ($errors->has('name'))
                 <ul class="bg-danger">
                     @foreach ($errors->get('name') as $message)
@@ -27,11 +28,33 @@
         </div>
         <div class="my-3">
             <label for="email" class="input-label">Email</label>
-            <input type="text" class="form-control" name="email" value="{{ old('email', $user-> email) }}" required autofocus
-                autocomplete="username">
+            <input type="text" class="form-control" name="email" value="{{ $user->email }}" required readonly>
             @if ($errors->has('email'))
                 <ul class="bg-danger">
                     @foreach ($errors->get('email') as $message)
+                        <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+        <div class="my-3">
+            <label for="category" class="input-label">Category</label>
+            <input type="text" class="form-control" name="category" value="{{ old('category', $user->category) }}"
+                required>
+            @if ($errors->has('category'))
+                <ul class="bg-danger">
+                    @foreach ($errors->get('category') as $message)
+                        <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+        <div class="my-3">
+            <label for="size" class="input-label">Size</label>
+            <input type="text" class="form-control" name="size" value="{{ old('size', $user->size) }}" required>
+            @if ($errors->has('size'))
+                <ul class="bg-danger">
+                    @foreach ($errors->get('size') as $message)
                         <li>{{ $message }}</li>
                     @endforeach
                 </ul>
@@ -56,11 +79,13 @@
         </div>
         <div>
             <button class="btn btn-primary" type="submit">Save</button>
-            @if (session('status') === 'profile-updated')
-            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">
-                Saved
-            </p>
-            @endif
+            @isset($status)
+                @if (session('status') === 'profile-updated' || $status === 'profile-updated')
+                    <p class="text-muted">
+                        Saved
+                    </p>
+                @endif
+            @endisset
         </div>
     </form>
 </section>

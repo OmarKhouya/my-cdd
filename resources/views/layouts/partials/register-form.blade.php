@@ -1,12 +1,11 @@
 <form method="POST" action="{{ route('register') }}" class="col-10 m-auto">
     @csrf
-
     <!-- Name -->
     <div class="row d-flex justify-content-between">
         <div class="col-md-6">
             <label for="name" class="input-label text-muted">Name</label>
             <input type="text" class="form-control" name="name" value="{{ old('name') }}" required
-                autofocus autocomplete="name">
+                 autocomplete="name">
             @if ($errors->has('name'))
                 <ul class="">
                     @foreach ($errors->get('name') as $message)
@@ -19,7 +18,7 @@
         <div class="col-md-6">
             <label for="category" class="input-label text-muted">category</label>
             <input type="text" class="form-control" name="category" value="{{ old('category') }}" required
-                autofocus autocomplete="category">
+                 autocomplete="category">
             @if ($errors->has('category'))
                 <ul class="bg-danger">
                     @foreach ($errors->get('category') as $message)
@@ -34,7 +33,7 @@
         <div class="col-md-6">
             <label for="Email" class="input-label text-muted">Email</label>
             <input type="text" class="form-control" name="email" value="{{ old('email') }}" required
-                autofocus autocomplete="username">
+                 autocomplete="username">
             @if ($errors->has('email'))
                 <ul class="bg-danger">
                     @foreach ($errors->get('email') as $message)
@@ -48,7 +47,7 @@
         <div class="col-md-6">
             <label for="size" class="input-label text-muted">size</label>
             <input type="text" class="form-control" name="size" value="{{ old('size') }}" required
-                autofocus autocomplete="size">
+                 autocomplete="size">
             @if ($errors->has('size'))
                 <ul class="bg-danger">
                     @foreach ($errors->get('size') as $message)

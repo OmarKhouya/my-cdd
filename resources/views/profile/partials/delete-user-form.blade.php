@@ -6,17 +6,16 @@
     <p class="text-muted ">
         Once your account is deleted, all of its resources and data will be permanently deleted
     </p>
-    <!-- Button trigger modal -->
+
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-account">
         Delete Account
     </button>
 
-    <!-- Modal -->
     <div class="modal fade" id="delete-account" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                <form method="post" action="{{ Auth::guard('partner')->check() ? route('partner.profile.destroy') : route('profile.destroy') }}" class="p-6">
                     @csrf
                     @method('delete')
                     <div class="modal-header">

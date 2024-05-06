@@ -1,9 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Login')
 @section('content')
-    <section class="d-flex justify-content-center align-items-center py-5 text-dark" style="background-color: #A7ECEE;height: 78vh">
+    <section class="d-flex justify-content-center align-items-center py-5 text-dark" style="background-color: #6EF3D6;height: 77vh">
         <div class="container">
-            <h1 class="text-center">Login</h1>
+            <h1 class="text-center">Login <a href="{{route('partner.login')}}" class="text-dark">As a partner</a></h1>
+
             <form method="POST" action="{{ route('login') }}" class="col-lg-6 m-auto">
                 @csrf
                 <div class="my-3">

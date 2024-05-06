@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Profile')
 @section('content')
-    <section class="py-5 text-dark" style="background-color: #FEFAF6">
+    <section class="py-5 text-dark" style="background-color: #6EF3D6">
         <div class="container">
             <h1 class="text-center">Profile</h1>
             <div class="my-3">
