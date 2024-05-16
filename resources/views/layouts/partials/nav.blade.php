@@ -9,12 +9,21 @@
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                 @if (Auth::check() || Auth::guard('partner')->check())
                     @if (Auth::guard('partner')->check())
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
-                                href="{{ route('partner.dashboard') }}">Dashboard</a>
+                                href="{{ route('partner.dashboard', '#manageOffers') }}">Dashboard</a>
+                        </li> --}}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('partner.dashboard', '#manageOffers') }}">Manage offers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('partner.offers') }}">Offers</a>
+                            <a class="nav-link" href="{{ route('partner.dashboard', '#createOffer') }}">Create offer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('partner.dashboard', '#manageApplications') }}">Manage Assignments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('partner.offers') }}">All Offers</a>
                         </li>
                     @else
                         <li class="nav-item">

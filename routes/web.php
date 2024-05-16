@@ -27,6 +27,7 @@ Route::prefix('member')->group(function () {
     Route::middleware('auth')->group(function () {
 
         Route::get('/dashboard', [MemberController::class, 'index'])->name('member.dashboard');
+
         Route::delete('/apply/drop/{offer}', [MemberController::class, 'drop'])->name('member.apply.drop');
 
         Route::get('/offers', [OffersController::class, 'index'])->name('member.offers');
@@ -35,7 +36,11 @@ Route::prefix('member')->group(function () {
     });
 });
 
+Route::get('/profile/{id}', [MemberController::class, 'profile'])->name('profile.index');
+
 Route::prefix('partner')->group(function () {
+
+    Route::get('/profile/{id}', [PartnerController::class, 'profile'])->name('partner.profile.index');
 
     Route::middleware('auth.guest')->group(function () {
         /* login */

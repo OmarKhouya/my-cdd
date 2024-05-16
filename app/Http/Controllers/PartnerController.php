@@ -24,8 +24,9 @@ class PartnerController extends Controller
         /* get all offers members did apply to */
         $assignments = Offers::where('offers.partner_id', $partnerId)
             ->join('assignments', 'assignments.offers_id', '=', 'offers.id')
-            ->join('users', 'users.id', '=', 'assignments.user_id')->select('users.*')->get();
-
+            ->join('users', 'users.id', '=', 'assignments.user_id')
+            ->select(['offers.*', 'users.name as user_name', 'users.id as user_id', 'assignments.accepted'])
+            ->get();
         return view('partner.dashboard', compact('offers', 'assignments'));
     }
     /**
@@ -81,7 +82,7 @@ class PartnerController extends Controller
         return redirect()->route('partner.dashboard');
     }
     /**
-     * Logout
+     * Partner Logout
      */
     public function logout()
     {
@@ -157,4 +158,15 @@ class PartnerController extends Controller
 
         return redirect()->route('home')->with('status', 'account-deleted');
     }
+
+    /**
+     * Display Partner Profile
+     */
+    public function profile(String $id)
+    {
+        $user = Partner::find($id);
+        $isPartner = true;
+        return view('profile.index', compact('user', 'isPartner'));
+    }
+
 }

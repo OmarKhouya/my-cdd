@@ -56,7 +56,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="text-center" colspan="8">No offers applied yet <i class="fa-solid fa-face-sad-tear">
+                        <td class="text-center" colspan="8"><i class="fa-regular fa-face-sad-tear me-2"></i> offers applied yet
                         </td>
                     </tr>
                 @endforelse

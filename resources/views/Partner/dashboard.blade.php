@@ -1,8 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Partner')
-
 @section('content')
-    <section class="pt-5 text-dark" style="background-color: #6EF3D6;">
+    <section class="pt-5 text-dark" style="background-color: #6EF3D6;" id="manageOffers">
         <div class="container">
             <h1 class="text-start mb-3">Welcome back,<br> {{ Auth::guard('partner')->user()->name }}</h1>
             <hr class="w-25">
@@ -61,7 +60,7 @@
             {{ $offers->onEachSide(0)->links() }}
         </div>
     </section>
-    <section class="py-5 text-dark" style="background-color: #C6FCE5;">
+    <section class="py-5 text-dark" style="background-color: #C6FCE5;" id="createOffer">
         <div class="container">
             <div class="row mx-auto">
                 <div class="col-md-6 border-end border-dark">
@@ -79,7 +78,7 @@
             </div>
         </div>
     </section>
-    <section class="py-5 text-dark" style="background-color: #6EF3D6;">
+    <section class="py-5 text-dark" style="background-color: #6EF3D6;" id="manageApplications">
         <div class="container">
             <h1 class="text-center mb-3"> Manage your assignments</h1>
             @if ($errors->has('success'))
@@ -99,68 +98,71 @@
                     </div>
                 @endforeach
             @endif
-            <table class="table table-success table-bordered">
-                <tr>
-                    <th>title</th>
-                    <th>description</th>
-                    <th>category</th>
-                    <th>availability</th>
-                    <th>accepted</th>
-                    <th>member who applied</th>
-                    <th>grant</th>
-                    <th>decline</th>
-                    <th>change availability</th>
-                </tr>
-               @forelse($assignments as $offer)
+            <div class="table-responsive">
+                <table class="table table-success table-bordered">
                     <tr>
-                        <td>
-                            {{ $offer->title }}
-                        </td>
-                        <td>
-                            {{ $offer->description }}
-                        </td>
-                        <td>
-                            {{ $offer->category }}
-                        </td>
-                        <td class="text-{{ $offer->availability ? 'success' : 'danger' }}">
-                            {{ $offer->availability ? 'available' : 'unavailable' }}
-                        </td>
-                        <td class="text-{{ $offer->accepted ? 'success' : 'danger' }}">
-                            {{ $offer->accepted ? 'accepted' : 'not accepted' }}
-                        </td>
-                        <td>
-                            {{ $offer->user_name }}
-                        </td>
-                        <td>
-                            <a class="btn btn-success"
-                                href="{{ route('partner.offers.grant', $offer->offers_id) }} ">Grant</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger"
-                                href="{{ route('partner.offers.decline', $offer->offers_id) }}">Decline</a>
-                        </td>
-                        <td>
-                            <form action="{{ route('partner.offers.availabilityToggle', $offer->offers_id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                @if ($offer->availability == true)
-                                    <input type="checkbox" class="form-check-input d-none" name="availability"
-                                        id="availability">
-                                    <button class="btn btn-danger" type="submit">unavailable</button>
-                                @elseif ($offer->availability == false)
-                                    <input type="checkbox" checked class="form-check-input d-none" name="availability"
-                                        id="availability">
-                                    <button class="btn btn-success" type="submit">available</button>
-                                @endif
-                            </form>
-                        </td>
+                        <th>title</th>
+                        <th>description</th>
+                        <th>category</th>
+                        <th>availability</th>
+                        <th>accepted</th>
+                        <th>member who applied</th>
+                        <th>grant</th>
+                        <th>decline</th>
+                        <th>change availability</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="8" class="text-center">No offers applied yet</td>
-                    </tr>
-                @endforelse
-            </table>
+                    @forelse($assignments as $offer)
+                        <tr>
+                            <td>
+                                {{ $offer->title }}
+                            </td>
+                            <td>
+                                {{ $offer->description }}
+                            </td>
+                            <td>
+                                {{ $offer->category }}
+                            </td>
+                            <td class="text-{{ $offer->availability ? 'success' : 'danger' }}">
+                                {{ $offer->availability ? 'available' : 'unavailable' }}
+                            </td>
+                            <td class="text-{{ $offer->accepted ? 'success' : 'danger' }}">
+                                {{ $offer->accepted ? 'accepted' : 'not accepted' }}
+                            </td>
+                            <td>
+                                {{ $offer->user_name }}
+                            </td>
+                            <td>
+                                <a class="btn btn-success"
+                                    href="{{ route('partner.offers.grant', $offer->id) }} ">Grant</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger"
+                                    href="{{ route('partner.offers.decline', $offer->id) }}">Decline</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('partner.offers.availabilityToggle', $offer->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    @if ($offer->availability == true)
+                                        <input type="checkbox" class="form-check-input d-none" name="availability"
+                                            id="availability">
+                                        <button class="btn btn-danger" type="submit">unavailable</button>
+                                    @elseif ($offer->availability == false)
+                                        <input type="checkbox" checked class="form-check-input d-none" name="availability"
+                                            id="availability">
+                                        <button class="btn btn-success" type="submit">available</button>
+                                    @endif
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="text-center"><i class="fa-regular fa-face-sad-tear me-2"></i>No offers
+                                applied yet</td>
+                        </tr>
+                    @endforelse
+                </table>
+            </div>
         </div>
     </section>
 @endsection

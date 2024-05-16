@@ -101,6 +101,9 @@ class OffersController extends Controller
         $offer->delete();
         return redirect()->route('partner.offers')->with('success', 'Offer deleted successfully');
     }
+    /**
+     * Member can apply for an offer
+     */
     public function apply(Offers $offer)
     {
         $user = Auth::user();
@@ -112,6 +115,9 @@ class OffersController extends Controller
             return redirect()->back()->withErrors(['danger' => 'You have already applied to this offer.']);
         }
     }
+    /**
+     *  Partner can decline a user applyment for offer
+     */
     public function decline(String $id)
     {
         $partner_id = Auth::guard('partner')->user()->id;
@@ -119,8 +125,11 @@ class OffersController extends Controller
             ->where('assignments.partner_id', $partner_id)
             ->where('assignments.offers_id', $id)
             ->delete();
-        return redirect()->back()->withErrors(['success' => 'Offer applyment declined successfully']);
+        return redirect()->route('partner.dashboard', '#manageApplications')->withErrors(['success' => 'Offer applyment declined successfully']);
     }
+    /**
+     *   Partner can accept a user applyment for offer
+     */
     public function grant(String $id)
     {
         $partner_id = Auth::guard('partner')->user()->id;
@@ -136,13 +145,14 @@ class OffersController extends Controller
             DB::table('assignments')
                 ->where('id', $assignment->id)
                 ->update(['accepted' => true]);
-            return redirect()->back()->withErrors(['success' => 'Offer granted successfully']);
+            return redirect()->route('partner.dashboard', '#manageApplications')->withErrors(['success' => 'Offer granted successfully']);
         } else {
-            return redirect()->back()->withErrors(['danger' => 'cound not grant assignment']);
+            return redirect()->route('partner.dashboard', '#manageApplications')->withErrors(['danger' => 'cound not grant assignment']);
         }
     }
-
-
+    /**
+     *   Partner can Toggle offer availability
+     */
     public function availabilityToggle(Request $request, String $id)
     {
         $offer = Offers::find($id);
@@ -150,6 +160,6 @@ class OffersController extends Controller
             'availability' => $request->availability ? 1 : 0,
         ]);
         $offer->save();
-        return redirect()->route('partner.dashboard')->with('success', 'Offer updated successfully');
+        return redirect()->route('partner.dashboard', '#manageApplications')->with('success', 'Offer updated successfully');
     }
 }
