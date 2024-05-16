@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AssignmentsController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +23,16 @@ Route::get('/', function () {
 })->middleware('auth.guest')->name('home');
 
 
-Route::prefix('member')->group(function(){
+Route::prefix('member')->group(function () {
+    Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard',[MemberController::class, 'index'])->name('member.dashboard');
+        Route::get('/dashboard', [MemberController::class, 'index'])->name('member.dashboard');
+        Route::delete('/apply/drop/{offer}', [MemberController::class, 'drop'])->name('member.apply.drop');
 
+        Route::get('/offers', [OffersController::class, 'index'])->name('member.offers');
+        Route::get('/offers/{offer}', [OffersController::class, 'show'])->name('member.offers.show');
+        Route::post('/offers/apply/{offer}', [OffersController::class, 'apply'])->name('member.offers.apply');
+    });
 });
 
 Route::prefix('partner')->group(function () {
@@ -51,6 +59,20 @@ Route::prefix('partner')->group(function () {
 
         /* logout */
         Route::post('/logout', [PartnerController::class, 'logout'])->name('partner.logout');
+
+        /* Offers */
+        // Route::resource('offers', OffersController::class);
+        Route::get('/offers', [OffersController::class, 'index'])->name('partner.offers');
+        Route::get('/offers/create', [OffersController::class, 'create'])->name('partner.offers.create');
+        Route::post('/offers', [OffersController::class, 'store'])->name('partner.offers.store');
+        Route::get('/offers/{offer}', [OffersController::class, 'show'])->name('partner.offers.show');
+        Route::get('/offers/{offer}/edit', [OffersController::class, 'edit'])->name('partner.offers.edit');
+        Route::put('/offers/{offer}', [OffersController::class, 'update'])->name('partner.offers.update');
+        Route::put('/offers/availability/{id}', [OffersController::class, 'availabilityToggle'])->name('partner.offers.availabilityToggle');
+        Route::delete('/offers/{offer}', [OffersController::class, 'destroy'])->name('partner.offers.destroy');
+
+        Route::get('/apply/grant/{id}', [OffersController::class, 'grant'])->name('partner.offers.grant');
+        Route::get('/apply/decline/{id}', [OffersController::class, 'decline'])->name('partner.offers.decline');
     });
 });
 

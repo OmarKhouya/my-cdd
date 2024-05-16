@@ -50,8 +50,6 @@ class User extends Authenticatable
     ];
     public function offer()
     {
-        return $this->belongsToMany(Offers::class, 'assignements');
+        return $this->belongsToMany(Offers::class, 'assignments')->withPivot('accepted');
     }
-
-
 }

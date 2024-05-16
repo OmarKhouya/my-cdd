@@ -46,4 +46,5 @@ class Partner extends Authenticatable
     {
         return $this->hasMany(Offers::class);
     }
+
 }

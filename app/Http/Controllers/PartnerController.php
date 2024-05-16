@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Offers;
 use App\Models\Partner;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -17,7 +18,15 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        return view('partner.dashboard');
+        $partnerId = Auth::guard('partner')->user()->id;
+        $offers = Partner::find($partnerId)->offer()->paginate(20);
+
+        /* get all offers members did apply to */
+        $assignments = Offers::where('offers.partner_id', $partnerId)
+            ->join('assignments', 'assignments.offers_id', '=', 'offers.id')
+            ->join('users', 'users.id', '=', 'assignments.user_id')->select('users.*')->get();
+
+        return view('partner.dashboard', compact('offers', 'assignments'));
     }
     /**
      * Show the form for login.

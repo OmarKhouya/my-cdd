@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Offers extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'title',
+        'description',
+        'category',
+        'availability',
+        'partner_id',
+    ];
     public function user()
     {
-        return $this->belongsToMany(User::class, 'assignements');
+        return $this->belongsToMany(User::class, 'assignments')->withPivot('accepted');
     }
     public function partner()
     {

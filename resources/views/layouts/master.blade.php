@@ -41,7 +41,7 @@
             scroll-behavior: smooth;
         }
     </style>
-    <title>my cdd| @yield('title')</title>
+    <title>my cdd | @yield('title')</title>
 </head>
 
 <body>

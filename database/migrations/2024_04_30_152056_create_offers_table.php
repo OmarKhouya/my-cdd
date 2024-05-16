@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('category', 50);
             $table->boolean('availability');
             $table->foreignId('partner_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
-            $table->unique(['title', 'partner_id']);
             $table->timestamps();
         });
     }

@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('offer_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
+            $table->foreignId('offers_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
+            $table->foreignId('partner_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('user_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
+            $table->boolean('accepted')->default(0);
+            $table->unique('offers_id');
             $table->timestamps();
         });
     }

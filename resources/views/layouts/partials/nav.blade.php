@@ -10,15 +10,19 @@
                 @if (Auth::check() || Auth::guard('partner')->check())
                     @if (Auth::guard('partner')->check())
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route('partner.dashboard')}}">Dashboard</a>
+                            <a class="nav-link active" aria-current="page"
+                                href="{{ route('partner.dashboard') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Offers</a>
+                            <a class="nav-link" href="{{ route('partner.offers') }}">Offers</a>
                         </li>
                     @else
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('member.offers') }}">Offers</a>
+                        </li>
                     @endif
                 @else
                     <li class="nav-item">
@@ -69,14 +73,47 @@
                 </div>
             </div>
         @else
-            <div class="d-flex justify-content-between">
-                <a class="nav-link text-dark me-3 d-flex flex-column" href="{{ route('login') }}">
+            <div class="dropdown">
+                <button class="nav-link text-dark d-flex flex-column align-items-center" href="#"
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-right-to-bracket"></i> <span>Login</span>
-                </a>
-                <div class="vr"></div>
-                <a class="nav-link text-dark ms-3 d-flex flex-column" href="{{ route('register') }}">
-                    <i class="fa-solid fa-user-plus"></i> Register
-                </a>
+                </button>
+
+                <ul class="dropdown-menu" style="background-color: #6EF3D6">
+                    <li>
+                        <a class="text-dark dropdown-item" href="{{ route('login') }}">
+                           <span>as a member</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-dark dropdown-item" href="{{ route('partner.login')  }}">
+                           <span>as a partner</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex justify-content-between">
+
+                <div class="vr mx-2"></div>
+                <div class="dropdown">
+                    <button class="nav-link text-dark me-3 d-flex flex-column align-items-center" href="#"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user-plus"></i> <span>Register</span>
+                    </button>
+
+                    <ul class="dropdown-menu" style="background-color: #6EF3D6">
+                        <li>
+                            <a class="text-dark dropdown-item" href="{{  route('register') }}">
+                               <span>as a member</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark dropdown-item" href="{{ route('partner.register')  }}">
+                               <span>as a partner</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         @endif
     </div>
