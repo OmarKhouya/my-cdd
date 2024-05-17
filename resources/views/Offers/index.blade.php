@@ -54,21 +54,23 @@
                                     {{ \Illuminate\Support\Str::limit($item->description, $limit = 50, $end = '...') }}
                                 </p>
                                 <p class="text-center">
-                                    <small class="text-muted">added by {{ $item->partner->name }}</small>
+                                    <small class="text">added by {{ $item->partner->name }}</small>
                                 </p>
                                 <p class="text-center">
                                     <small class="text-{{$item->availability ? 'success' : 'danger'}}">{{ $item->availability? 'available' : 'unavailable' }}</small>
                                 </p>
                                 <hr class="w-100 mb-2 m-auto">
-                                <div class=" text-center">
-                                    <small class="text-body-secondary">Last updated
-                                        {{ $offer->updated_at->diffForHumans() }}</small>
+                                <div class="d-flex justify-content-between">
+                                    <div class="my-auto">
+                                        <small class="text-body-secondary">Last updated
+                                            {{ $item->updated_at->diffForHumans() }}</small>
+                                    </div>
+                                    <a href="{{ Auth::guard('partner')->check() ? route('partner.offers.show', $item) : route('member.offers.show', $item) }}"
+                                        class="btn text-dark float-end  rounded" style="background-color: #0DCEDA">
+                                        View
+                                    </a>
                                 </div>
                             </div>
-                            <a href="{{ Auth::guard('partner')->check() ? route('partner.offers.show', $item) : route('member.offers.show', $item) }}"
-                                class="btn text-dark w-100  rounded-top-0" style="background-color: #0DCEDA">
-                                View
-                            </a>
                         </div>
                     </div>
                 @empty

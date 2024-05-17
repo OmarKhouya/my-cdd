@@ -27,7 +27,7 @@ Route::prefix('member')->group(function () {
     Route::middleware('auth')->group(function () {
 
         Route::get('/dashboard', [MemberController::class, 'index'])->name('member.dashboard');
-
+        Route::get('/linking/{id}', [MemberController::class, 'linking'])->name('member.linking');
         Route::delete('/apply/drop/{offer}', [MemberController::class, 'drop'])->name('member.apply.drop');
 
         Route::get('/offers', [OffersController::class, 'index'])->name('member.offers');

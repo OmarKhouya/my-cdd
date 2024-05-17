@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('linked_user_id');
+            $table->boolean('accepted')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('linked_user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->unique(['user_id', 'linked_user_id']);
         });
     }
 

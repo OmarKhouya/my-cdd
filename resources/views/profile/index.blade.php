@@ -8,10 +8,10 @@
         }
 
         /* .profile-header img {
-                                            width: 150px;
-                                            height: 150px;
-                                            border-radius: 50%;
-                                        } */
+                                                                                width: 150px;
+                                                                                height: 150px;
+                                                                                border-radius: 50%;
+                                                                            } */
 
         .profile-header h2 {
             margin-top: 15px;
@@ -25,6 +25,7 @@
         .list-group-item {
             background-color: #EBFFFA;
         }
+
         .list-group-item:hover {
             background-color: #6EF3D6;
         }
@@ -38,8 +39,28 @@
                     {{-- <img src="https://via.placeholder.com/150" alt="User Photo"> --}}
                     <h2>{{ $user->name }}</h2>
                     <p class="text-muted">{{ $user->plan }}</p>
+                    @if (!$isPartner && Auth::user()->id != $user->id)
+                        @if ($link_exists)
+                            <h6>You and {{ $user->name }} are linked</h6>
+                        @elseif ($request_pending)
+                            <h6 class="">Your linking request is pending!</h6>
+                        @else
+                            @auth
+                                <a href="{{ route('member.linking', $user->id) }}" class="btn btn-primary">Linking request</a>
+                            @endauth
+                        @endif
+                    @endif
+                    @if ($errors->has('success'))
+                        @foreach ($errors->all() as $err)
+                            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                                <i class="fa-solid fa-square-check"></i>
+                                <strong>Done!</strong> {{ $err }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
-
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
@@ -101,7 +122,7 @@
                                     <h5 class="card-title">Latest applied Offers</h5>
                                     <div class="list-group">
                                         @foreach ($user->offer->take(3) as $offer)
-                                            <a href="{{ route('member.offers.show', $offer->id) }}"
+                                            <a href="{{ Auth::guard('partner')->check() ? route('partner.offers.show', $offer->id) : route('member.offers.show', $offer->id) }}"
                                                 class="list-group-item list-group-item-action">
                                                 <h6 class="mb-1">{{ $offer->title }}</h6>
                                                 <p class="mb-1">{{ $offer->description }}</p>

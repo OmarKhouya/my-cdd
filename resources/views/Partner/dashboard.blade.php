@@ -129,7 +129,7 @@
                                 {{ $offer->accepted ? 'accepted' : 'not accepted' }}
                             </td>
                             <td>
-                                {{ $offer->user_name }}
+                                <a href="{{ route('profile.index', $offer->user_id) }}" class="text-dark">{{ $offer->user_name }}</a>
                             </td>
                             <td>
                                 <a class="btn btn-success"

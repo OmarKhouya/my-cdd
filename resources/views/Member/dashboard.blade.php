@@ -41,7 +41,8 @@
                         <td class="text-center">{{ $offer->category }}</td>
                         <td class="text-center {{ $offer->availability ? 'text-success' : 'text-danger' }}">
                             {{ $offer->availability ? 'available' : 'unavailable' }}</td>
-                        <td class="text-center">{{ $offer->partner->name }}</td>
+                        <td class="text-center"><a href="{{ route('partner.profile.index', $offer->partner->id) }}"
+                                class="text-dark">{{ $offer->partner->name }}</a></td>
                         <td class="text-center {{ $offer->pivot->accepted ? 'text-success' : 'text-danger' }}">
                             {{ $offer->pivot->accepted ? 'accepted' : 'not accepted' }}</td>
                         <td class="text-center">{{ $offer->created_at->diffForHumans() }}</td>
@@ -56,11 +57,33 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="text-center" colspan="8"><i class="fa-regular fa-face-sad-tear me-2"></i> offers applied yet
+                        <td class="text-center" colspan="8"><i class="fa-regular fa-face-sad-tear me-2"></i> offers
+                            applied yet
                         </td>
                     </tr>
                 @endforelse
             </table>
+        </div>
+    </section>
+    <section class="py-5 text-dark" style="background-color: #EBFFFA;">
+        <div class="container">
+            <h3>find out other members you may know</h3>
+            <hr class="w-25">
+            <div class="row">
+                @foreach($members as $member)
+                    <div class="col-md-2">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $member->name }}</h5>
+                                <p class="card-text text-muted">{{ $member->email }}</p>
+                                <p class="text-muted">{{$member->category}}</p>
+                                <a href="{{ route('profile.index', $member->id) }}" class="btn btn-primary">View
+                                    Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </section>
 @endsection

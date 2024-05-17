@@ -51,7 +51,7 @@ class OffersController extends Controller
 
         $offer->save();
 
-        return redirect()->route('offers.create')->with('status', 'Offer created successfully.');
+        return redirect()->back()->with('status', 'Offer created successfully.');
     }
 
     /**
@@ -99,7 +99,7 @@ class OffersController extends Controller
     public function destroy(Offers $offer)
     {
         $offer->delete();
-        return redirect()->route('partner.offers')->with('success', 'Offer deleted successfully');
+        return redirect()->back()->with('success', 'Offer deleted successfully');
     }
     /**
      * Member can apply for an offer
