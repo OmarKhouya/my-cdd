@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('size');
             $table->string('category');
+            // $table->string('plan')->enum(['Membre','Privilège','VIP']);
             $table->string('plan');
             $table->rememberToken();
             $table->timestamps();

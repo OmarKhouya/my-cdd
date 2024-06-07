@@ -16,16 +16,16 @@ class GuestMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /*
-        /   check if the partner or user is logged in.
-        /   this middleware is used to prevent partner and user to reach each others login, register pages,
-        **/
-        
-        if(Auth::guard('partner')->check()) {
+        /**
+         *   check if the partner or user is logged in.
+         *   this middleware is used to prevent partner and user to reach each others login, register pages,
+         */
+
+        if (Auth::guard('partner')->check()) {
             return redirect()->route('partner.dashboard');
         }
 
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('member.dashboard');
         }
 

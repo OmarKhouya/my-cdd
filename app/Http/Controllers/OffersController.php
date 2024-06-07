@@ -86,7 +86,7 @@ class OffersController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'category' => $request->category,
-            'availability' => $request->availability ? 1 : 0,
+            'availability' => $request->availability ? true : false,
             'partner_id' => Auth::guard('partner')->user()->id,
         ]);
 

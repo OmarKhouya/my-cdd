@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('partner_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
             $table->foreignId('user_id')->constrained()->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('accepted')->default(0);
-            $table->unique('offers_id');
+            // $table->unique('offers_id');
             $table->timestamps();
         });
     }

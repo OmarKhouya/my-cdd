@@ -70,7 +70,7 @@
             <h3>find out other members you may know</h3>
             <hr class="w-25">
             <div class="row">
-                @foreach($members as $member)
+                @foreach($suggested_users as $member)
                     <div class="col-md-2">
                         <div class="card text-center">
                             <div class="card-body">

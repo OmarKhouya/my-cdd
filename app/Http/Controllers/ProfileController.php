@@ -15,13 +15,18 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request)/*:  View */
+    public function edit(Request $request)/*: View */
     {
-        $links = User::where('users.id', Auth::user()->id)->join('linkings', 'users.id','=', 'linkings.linked_user_id')/* ->select(['users.*', 'linkings.accepted']) */->get();
-        dump($links);
-        /* return view('profile.edit', [
-            'user' => $request->user(),
-        ]); */
+        $user = Auth::user();
+
+        // Load both linkings initiated by the user and linkings where the user is the linked user
+        $user->load('linkings', 'linkedBy');
+
+        return view('profile.edit', [
+            'user' => $user,
+            'linkings' => $user->linkings,
+            'linkingRequests' => $user->linkedBy,
+        ]);
     }
 
     /**

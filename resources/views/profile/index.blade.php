@@ -8,10 +8,10 @@
         }
 
         /* .profile-header img {
-                                                                                width: 150px;
-                                                                                height: 150px;
-                                                                                border-radius: 50%;
-                                                                            } */
+                                                                                            width: 150px;
+                                                                                            height: 150px;
+                                                                                            border-radius: 50%;
+                                                                                        } */
 
         .profile-header h2 {
             margin-top: 15px;
@@ -39,15 +39,17 @@
                     {{-- <img src="https://via.placeholder.com/150" alt="User Photo"> --}}
                     <h2>{{ $user->name }}</h2>
                     <p class="text-muted">{{ $user->plan }}</p>
-                    @if (!$isPartner && Auth::user()->id != $user->id)
-                        @if ($link_exists)
-                            <h6>You and {{ $user->name }} are linked</h6>
-                        @elseif ($request_pending)
-                            <h6 class="">Your linking request is pending!</h6>
-                        @else
-                            @auth
-                                <a href="{{ route('member.linking', $user->id) }}" class="btn btn-primary">Linking request</a>
-                            @endauth
+                    @if (Auth::check() || Auth::guard('partner')->check())
+                        @if (!$isPartner && Auth::user()->id != $user->id)
+                            @if ($link_exists)
+                                <h6>You and {{ $user->name }} are linked</h6>
+                            @elseif ($request_pending)
+                                <h6 class="">Your linking request is pending!</h6>
+                            @else
+                                @auth
+                                    <a href="{{ route('member.linking', $user->id) }}" class="btn btn-primary">Linking request</a>
+                                @endauth
+                            @endif
                         @endif
                     @endif
                     @if ($errors->has('success'))

@@ -10,22 +10,42 @@
                         <section>
                             <div>
                                 <h2 class="">
-                                    Linkings inforamtions
+                                    Linkings informations
                                 </h2>
-                                <p class="text-muted">here you can accept or deny linking requests</p>
-                                <div>
-                                    @foreach ($links as $link)
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{ $link-> }}</h5>
-                                                <p class="card-text text-muted">{{ $link->email }}</p>
-                                                <p class="text-muted">{{ $link->category }}</p>
-                                                <a href="{{ route('profile.index', $link->id) }}" class="btn btn-primary">View
+                                <p class="text-muted">Here you can accept or deny linking requests</p>
+                                <table class="table">
+                                    <tr>
+                                        <th>link id</th>
+                                        <th>user linking</th>
+                                        <th>accepted</th>
+                                        <th>action</th>
+                                        <th>since</th>
+                                    </tr>
+                                    @foreach ($user->linkedBy as $link)
+                                        <tr>
+                                            <td class="card-title">{{ $link->id }}</td>
+                                            <td>{{ $link->user->name }}</td>
+                                            <td>{{ $link->accepted ? 'yes' : 'no' }}</td>
+                                            <td>
+                                                @if ($link->accepted)
+                                                    <a class="btn btn-danger"
+                                                        href="{{ route('member.linking.reject', $link->user->id) }}">remove</a>
+                                                @else
+                                                    <a class="btn btn-success"
+                                                        href="{{ route('member.linking.accept', $link->user->id) }}">accept</a>
+                                                    <a class="btn btn-danger"
+                                                        href="{{ route('member.linking.reject', $link->user->id) }}">reject</a>
+                                                @endif
+                                                <a href="{{ route('profile.index', $link->user->id) }}"
+                                                    class="btn btn-primary">View
                                                     Profile</a>
-                                            </div>
-                                        </div>
+                                            </td>
+                                            <td>
+                                                {{ $link->created_at->diffForHumans() }}
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                </div>
+                                </table>
                             </div>
                         </section>
                     </div>
