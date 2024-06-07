@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Offers;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,15 @@ class OffersSeeder extends Seeder
      */
     public function run(): void
     {
-        Offers::factory()->count(1000)->create();
+        $offers = Offers::factory()->count(100)->create();
+        $users = User::all();
+
+        $partnerIds = $offers->pluck('partner_id')->toArray(); // Get all partner IDs
+
+        foreach ($users as $user) {
+            foreach ($offers as $index => $offer) {
+                $user->offer()->attach($offer->id, ['accepted' => 0, 'partner_id' => $partnerIds[$index]]);
+            }
+        }
     }
 }

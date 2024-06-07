@@ -63,6 +63,7 @@
                     </tr>
                 @endforelse
             </table>
+            {{ $appliedOffers->onEachSide(0)->links() }}
         </div>
     </section>
     <section class="py-5 text-dark" style="background-color: #EBFFFA;">

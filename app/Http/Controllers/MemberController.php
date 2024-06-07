@@ -31,7 +31,7 @@ class MemberController extends Controller
             ->limit(20)
             ->get();
 
-        $appliedOffers = $current_user->offer;
+        $appliedOffers = $current_user->offer()->paginate(15);
         return view('member.dashboard', compact('appliedOffers', 'suggested_users'));
     }
 
