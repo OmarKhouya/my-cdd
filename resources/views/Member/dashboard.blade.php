@@ -71,7 +71,7 @@
             <hr class="w-25">
             <div class="row">
                 @foreach($suggested_users as $member)
-                    <div class="col-md-2">
+                    <div class="col-md-2 my-3">
                         <div class="card text-center">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $member->name }}</h5>

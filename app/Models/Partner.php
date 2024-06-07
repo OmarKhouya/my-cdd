@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Partner extends Authenticatable
 {
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *

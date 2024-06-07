@@ -17,7 +17,11 @@ class PartnerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->sentence(1),
+            'password' => bcrypt('password'),
+            'category' => $this->faker->sentence(1),
+            'email' => $this->faker->unique()->safeEmail(),
+            'size' => $this->faker->sentence(1),
         ];
     }
 }
